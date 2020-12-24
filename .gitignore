@@ -1,8 +1,11 @@
 # Default ignored files
-/shelf/
+/.idea
 /workspace.xml
 # Datasource local storage ignored files
 /../../../../../../:\Users\mawro\IdeaProjects\API_FRAMEWORK\.idea/dataSources/
 /dataSources.local.xml
 # Editor-based HTTP Client requests
 /httpRequests/
+#iml
+*.iml
+*.debug
