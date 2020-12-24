@@ -38,7 +38,7 @@ public class ConfigurationReader {
     }
     /**
      * Getter
-     * @param keyWord key - to get disired value
+     * @param keyWord key - to get desired value
      * @return returns the value from configuration.properties
      */
     public static String getProperty(String keyWord){
