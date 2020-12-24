@@ -1,14 +1,12 @@
 package utility;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class DB_Utility {
     /**
-     *  Connection (session) with a specific
-     *  database. SQL statements are executed and results are returned
-     *  within the context of a connection.
+     *  Connection (session) with a specific database.
+     *  SQL statements are executed and results are returned within the context of a connection.
      */
     static Connection conn;
     /**
@@ -160,6 +158,22 @@ public class DB_Utility {
         return rowCount;
     }
 
+    public static int rowCount(){
+        int rowCount = 0;
+            try {
+                resultSet.beforeFirst();
+                while (resultSet.next()) {
+                    rowCount++;
+                }
+                resultSet.beforeFirst();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        return rowCount;
+    }
+
+
     /**
      * Get the column count by using the MetaData
      * @return number of columns
@@ -218,14 +232,127 @@ public class DB_Utility {
         }
         return rowDataList;
     }
+    public static String getColumnDataAtRow(int rowNum, int columnNum){
+            String result = null;
+            if(rowNum <= getRowCount() && columnNum <= getColumnCount()){
+                try {
+                    resultSet.absolute(rowNum);
+                    result = resultSet.getString(columnNum);
+                    resultSet.beforeFirst();
+
+                } catch (SQLException e) {
+                    System.out.println("Error while getting cell value " + e.getMessage());
+                }
+            }else{
+                throw new IllegalArgumentException();
+            }
+            return result;
+    }
+
+    public static String getColumnDataAtRow(int rowNum, String columnName){
+        String result = null;
+
+        if(rowNum <= getRowCount() && getColumnNames().contains(columnName)){
+            try {
+                resultSet.absolute(rowNum);
+                result = resultSet.getString(columnName);
+                resultSet.beforeFirst();
+
+            } catch (SQLException e) {
+                System.out.println("Error while getting cell value " + e.getMessage());
+            }
+        }else{
+            throw new IllegalArgumentException();
+        }
+        return result;
+    }
+
+    public static List<String> getColumnAsList(int columnIndex){
+
+        List<String > columnValues = new ArrayList<>();
+
+        if(columnIndex <= getColumnCount()){
+            try {
+                while (resultSet.next()) {
+                    columnValues.add(resultSet.getString(columnIndex));
+                }
+                resultSet.beforeFirst();
+            } catch (SQLException e){
+                System.out.println("Error while getting column as list " + e.getMessage());
+            }
+        } else{
+            throw new IllegalArgumentException();
+        }
+        return columnValues;
+
+    }
+
+    public static List<String> getColumnAsList(String columnName){
+        List<String > columnValues = new ArrayList<>();
+        if(getColumnNames().contains(columnName)){
+            try {
+                while (resultSet.next()) {
+                    columnValues.add(resultSet.getString(columnName));
+                }
+                resultSet.beforeFirst();
+            } catch (SQLException e){
+                System.out.println("Error while getting column as list " + e.getMessage());
+            }
+        }else{
+            throw new IllegalArgumentException();
+        }
+        return columnValues;
+    }
+
+    public static void displayAllData(){
+        try {
+            resultSet.beforeFirst();
+            while (resultSet.next()) {
+                for (int column = 1; column <= getColumnCount(); column++){
+                    System.out.print(resultSet.getString(column) + "  ");
+                }
+                System.out.println();
+            }
+            resultSet.beforeFirst();
+        } catch (SQLException e){
+            System.out.println("Error while getting column as list " + e.getMessage());
+        }
 
 
+    }
 
+    public static Map<String, String> getRowDataAsMap(int rowNum){
 
+        Map<String, String> rowAsMap = new LinkedHashMap<>();
+        try {
+            resultSet.absolute(rowNum);
+            for (int column = 1; column <= getColumnCount(); column++) {
+                rowAsMap.put(getColumnNames().get(column-1), resultSet.getString(column));
+            }
+            resultSet.beforeFirst();
+        }catch (SQLException e){
+            System.out.println("Error while getting row data as map " + e.getMessage());
+        }
+        return rowAsMap;
+    }
 
-
-
-
+    public static List<Map<String, String>> tableRowsAsList(){
+        List<Map<String, String>> tableRowsAsList = new ArrayList<>();
+        try {
+            resultSet.beforeFirst();
+            while(resultSet.next()) {
+                Map<String, String> rowAsMap = new LinkedHashMap<>();
+                for (int column = 1; column <= getColumnCount(); column++) {
+                    rowAsMap.put(getColumnNames().get(column - 1), resultSet.getString(column));
+                }
+                tableRowsAsList.add(rowAsMap);
+            }
+            resultSet.beforeFirst();
+        }catch (SQLException e){
+            System.out.println("Error while getting all data as list of maps " + e.getMessage());
+        }
+        return tableRowsAsList;
+    }
 
 
 }
