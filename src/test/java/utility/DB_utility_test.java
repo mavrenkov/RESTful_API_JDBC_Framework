@@ -23,11 +23,11 @@ public class DB_utility_test {
         System.out.println(getColumnCount());
         resultSet.beforeFirst();
         List<String> rowDataAsList = getRowDataAsList(46);
-        System.out.println(rowDataAsList);
-        System.out.println("rowCount() = " + rowCount());
-        System.out.println("getRowCount() = " + getRowCount());
-        System.out.println("getColumnDataAtRow(67, 2) = " + getColumnDataAtRow(67, 2));
-        System.out.println("getColumnDataAtRow(67, name) = " + getColumnDataAtRow(67, "FIRST_NAME"));
+        //System.out.println(rowDataAsList);
+        //System.out.println("rowCount() = " + rowCount());
+        //System.out.println("getRowCount() = " + getRowCount());
+        //System.out.println("getColumnDataAtRow(67, 2) = " + getColumnDataAtRow(67, 2));
+        //System.out.println("getColumnDataAtRow(67, name) = " + getColumnDataAtRow(67, "FIRST_NAME"));
         //getColumnAsList(2).forEach(System.out::println);
         //getColumnAsList("FIRST_NAME").forEach(System.out::println);
         //displayAllData();
