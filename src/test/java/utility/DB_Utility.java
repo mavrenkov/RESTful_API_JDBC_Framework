@@ -232,6 +232,16 @@ public class DB_Utility {
         }
         return rowDataList;
     }
+
+
+    /**
+     * This method gets the String value of given cell from the ResultSet and take two parameters as follows
+     * @param rowNum - int number of row with the cell that we want to extract value from
+     * @param columnNum - int index of a column with the cell that we want to extract value from
+     * @return String value of the given cell
+     * This method checks whether given parameters is applicable to current ResultSet and
+     * throws IllegalArgumentException() if not.
+     */
     public static String getColumnDataAtRow(int rowNum, int columnNum){
             String result = null;
             if(rowNum <= getRowCount() && columnNum <= getColumnCount()){
@@ -249,6 +259,14 @@ public class DB_Utility {
             return result;
     }
 
+    /**
+     * This method gets the String value of given cell from the ResultSet and take two parameters as follows
+     * @param rowNum - int number of row with the cell that we want to extract value from
+     * @param columnName - String name of a column with the cell that we want to extract value from
+     * @return String value of the given cell
+     * This method checks whether given parameters is applicable to current ResultSet and
+     * throws IllegalArgumentException() if not.
+     */
     public static String getColumnDataAtRow(int rowNum, String columnName){
         String result = null;
 
@@ -267,6 +285,13 @@ public class DB_Utility {
         return result;
     }
 
+    /**
+     * This method gets all the cell values from every row for the given column
+     * @param columnIndex - int index of the column the we want to get cell values for
+     * @return List<String> where every list element is a cell String value for given column
+     * This method checks whether given parameter is applicable to current ResultSet and
+     * throws IllegalArgumentException() if not.
+     */
     public static List<String> getColumnAsList(int columnIndex){
 
         List<String > columnValues = new ArrayList<>();
@@ -287,6 +312,13 @@ public class DB_Utility {
 
     }
 
+    /**
+     * This method gets all the cell values from every row for the given column
+     * @param columnName - String name of the column the we want to get cell values for
+     * @return List<String> where every list element is a cell String value for given column
+     * This method checks whether given parameter is applicable to current ResultSet and
+     * throws IllegalArgumentException() if not.
+     */
     public static List<String> getColumnAsList(String columnName){
         List<String > columnValues = new ArrayList<>();
         if(getColumnNames().contains(columnName)){
@@ -304,6 +336,10 @@ public class DB_Utility {
         return columnValues;
     }
 
+    /**
+     * This method simply prints all the cell values from every row and column
+     * for the current ResultSet
+     */
     public static void displayAllData(){
         try {
             resultSet.beforeFirst();
@@ -321,6 +357,13 @@ public class DB_Utility {
 
     }
 
+    /**
+     * This method gets all the cell values from the given row in the key-value format
+     * @param rowNum - int number of the row, that we want to get values from
+     * @return Map<String, String> which is LinkedHashMap<>() where every element is a set of key and value
+     * where every key is String name of the column and every value is String value of the cell for that column
+     * This method uses getColumnNames() method which allows as to add key column names to the map
+     */
     public static Map<String, String> getRowDataAsMap(int rowNum){
 
         Map<String, String> rowAsMap = new LinkedHashMap<>();
@@ -336,6 +379,13 @@ public class DB_Utility {
         return rowAsMap;
     }
 
+    /**
+     * This method gets all the data from current ResultSet and returns it as follows
+     * @return List<Map<String, String>> where every element of the list is a row content represented as a Map
+     * where every element of the map is a set of key and value
+     * where every key is String name of the column and every value is String value of the cell for that column
+     * This method uses getColumnNames() method which allows as to add key column names to the maps
+     */
     public static List<Map<String, String>> tableRowsAsList(){
         List<Map<String, String>> tableRowsAsList = new ArrayList<>();
         try {
