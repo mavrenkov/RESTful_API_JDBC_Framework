@@ -51,9 +51,9 @@ public class DB_Utility {
      * 3. SQL exception - provides error related to the database connection.
      */
 
-    private final static  String connectionSTR = ConfigurationReader.getProperty("hr.database.url");
-    private final static  String username = ConfigurationReader.getProperty("hr.database.username");
-    private final static  String password = ConfigurationReader.getProperty("hr.database.password");
+    private final static  String connectionSTR = ConfigurationReader.getProperty("spartan.database.url");
+    private final static  String username = ConfigurationReader.getProperty("spartan.database.username");
+    private final static  String password = ConfigurationReader.getProperty("spartan.database.password");
 
     public static void createConnection(){
         try {
