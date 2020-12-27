@@ -27,8 +27,8 @@ import static utility.DB_Utility.*;
 @SerenityTest
 public class Spartan_CRUD_Test extends SpartanAdminTestBase {
 
-    private SpartanRead spartanResponsePOJO;
-    private Spartan randomSpartan;
+    private static SpartanRead spartanResponsePOJO;
+    private static Spartan randomSpartan;
 
     @Test
     @DisplayName("1. Create Spartan From POJO and Test POST /spartans")
@@ -45,7 +45,6 @@ public class Spartan_CRUD_Test extends SpartanAdminTestBase {
                 .post("/spartans").jsonPath();
 
         spartanResponsePOJO = SpartanPath.getObject("data",SpartanRead.class);
-
         Ensure.that("Request was successful", thenResponse -> thenResponse.statusCode(201))
                 .andThat("Response is in JSON format",thenResponse -> thenResponse.contentType(ContentType.JSON))
                 .andThat("Response was within 2 seconds", thenResponse ->  thenResponse.time(lessThan(2L), TimeUnit.SECONDS))
@@ -71,7 +70,7 @@ public class Spartan_CRUD_Test extends SpartanAdminTestBase {
         Ensure.that("Request was successful", thenResponse -> thenResponse.statusCode(200))
                 .andThat("Response is in JSON format",thenResponse -> thenResponse.contentType(ContentType.JSON))
                 .andThat("Response was within 2 seconds", thenResponse ->  thenResponse.time(lessThan(2L), TimeUnit.SECONDS))
-                .andThat("Response has spartan with id ", thenResponse -> thenResponse.body("data.id", is(spartanResponsePOJO.getId())));
+                .andThat("Response has spartan with id ", thenResponse -> thenResponse.body("id", is(spartanResponsePOJO.getId())));
 
         runQuery("SELECT * FROM spartans WHERE spartan_id=" + spartanResponsePOJO.getId());
 
