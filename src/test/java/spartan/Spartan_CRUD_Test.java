@@ -7,10 +7,9 @@ import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import net.serenitybdd.junit5.SerenityTest;
 import net.serenitybdd.rest.Ensure;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import net.thucydides.core.annotations.WithTag;
+import net.thucydides.core.annotations.WithTags;
+import org.junit.jupiter.api.*;
 import test_Base.SpartanAdminTestBase;
 import utility.Spartan_Util;
 
@@ -33,6 +32,9 @@ public class Spartan_CRUD_Test extends SpartanAdminTestBase {
 
     @Test
     @DisplayName("1. Create Spartan From POJO and Test POST /spartans")
+    @WithTags({
+            @WithTag("debug")
+    })
     public void createSpartanFromPOJO(){
 
         Spartan randomSpartan = Spartan_Util.getRandomSpartanPOJO_Payload();
@@ -43,7 +45,7 @@ public class Spartan_CRUD_Test extends SpartanAdminTestBase {
                 .contentType(ContentType.JSON)
                 .body(randomSpartan).
         when()
-                .post("/spartans").jsonPath();
+                .post("/spartans").jsonPath().prettyPeek();
 
         spartanResponsePOJO = SpartanPath.getObject("data",SpartanRead.class);
         Ensure.that("Request was successful", thenResponse -> thenResponse.statusCode(201))
